@@ -1,0 +1,60 @@
+﻿
+@model WebApplication1.Models.Team
+
+@{
+    ViewBag.Title = "Our Team";
+    var result = (List<WebApplication1.Models.Team>)ViewBag.TeamList;
+    var noOfImagesInRow = 5;
+    var iter = result.Count() / noOfImagesInRow;
+    int i = 0;
+}
+
+<html>
+<head>
+    <style>
+        .column {
+            float: left;
+            width: 20%;
+            padding: 5px;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 style="font-family:Calibri;"> Meet the Team</h1>
+    </div>
+
+    @for (var j = 0; j < iter && i < result.Count; j++)
+    {
+        <div class="row">
+            @for (var x = 0; x < noOfImagesInRow && i < result.Count; x++)
+            {
+                <div class="column">
+                    <div>
+                        <img src="~/Images/@result[i].ImageUrl" alt="@result[i].Name" />
+                    </div>
+                    <div style="font-family:Calibri; font-size: large;">
+                        @*<br />*@
+                        <b> @result[i].Name </b>
+                        <p> @result[i].Role</p>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                </div>
+                i++;
+            }
+        </div>
+    }
+
+</body>
+</html>

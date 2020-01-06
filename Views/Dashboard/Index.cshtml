@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script>
+
+    $(document).ready(function () {
+        //Load Data Here
+        var chartData = null;
+        $.ajax({
+            url: '/Dashboard/GetChartData',
+            type: 'GET',
+            dataType: 'json',
+            data: '',
+            success: function (d) {
+                chartData = d;
+            },
+            error: function () {
+                alert('Error!');
+            }
+        }).done(function () {
+            drawDashboard(chartData);
+        });
+    });
+
+</script>
+
+<div>
+    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load('visualization', '1', { packages: ['controls'] });
+
+        function drawDashboard(chartData) {
+
+            var data = google.visualization.arrayToDataTable(chartData);
+
+            var dash_container = document.getElementById('dashboard_div'),
+                myDashboard = new google.visualization.Dashboard(dash_container);
+
+            var collectionPicker = new google.visualization.ControlWrapper({
+                'controlType': 'CategoryFilter',
+                'containerId': 'control_div',
+                'options': {
+                    'filterColumnLabel': 'Collection Name',
+                    'width': '800px',
+                    'matchType': 'any',
+                    'ui': {
+                        'labelStacking': 'vertical',
+                        'label': 'Collection Name:'
+                    },
+                    'fontName': 'Calibri',
+                    'fontSize': '16'
+                },
+                'state': {
+                    'selectedValues': ['Trending This Week']
+                }
+            });
+
+            //Graph 1 - Bar Chart depicting Rating vs Number of Restaurants
+            var barChart1 = new google.visualization.ChartWrapper({
+                'chartType': 'BarChart',
+                'containerId': 'barChart1_div',
+                'options': {
+                    'width': 600,
+                    'height': 350,
+                    'title': 'Rating vs Number of Restaurants',
+                    'fontName': 'Calibri',
+                    'fontSize': '16',
+                    'legend': 'none'
+                },
+                'view': { 'columns': [1, 2] }
+            });
+
+            myDashboard.bind(collectionPicker, barChart1);
+
+            //Graph 2 - Pie Chart depicting Number of Restaurants in each price range
+            var pieChart1 = new google.visualization.ChartWrapper({
+                'chartType': 'PieChart',
+                'containerId': 'pieChart1_div',
+                'options': {
+                    'width': 600,
+                    'height': 350,
+                    'title': 'Number of Restaurants in each Price range',
+                    'fontName': 'Calibri',
+                    'fontSize': '16'
+                },
+                'view': { 'columns': [7, 8] }
+            });
+
+            myDashboard.bind(collectionPicker, pieChart1);
+
+            //Graph 3 - Column chart depicting number of restaurants offering online booking 
+            var columnChart1 = new google.visualization.ChartWrapper({
+                'chartType': 'ColumnChart',
+                'containerId': 'columnChart1_div',
+                'options': {
+                    'width': 600,
+                    'height': 350,
+                    'title': 'Online Booking Availability',
+                    'colors': ['red'],
+                    'fontName': 'Calibri',
+                    'fontSize': '16',
+                    'legend': 'none'
+                },
+                'view': { 'columns': [5, 6] }
+            });
+
+            myDashboard.bind(collectionPicker, columnChart1);
+
+            //Graph 4 - Column chart depicting number of restaurants offering delivery
+            var columnChart2 = new google.visualization.ChartWrapper({
+                'chartType': 'ColumnChart',
+                'containerId': 'columnChart2_div',
+                'options': {
+                    'width': 600,
+                    'height': 350,
+                    'title': 'Delivery Availability',
+                    'colors': ['purple'],
+                    'fontName': 'Calibri',
+                    'fontSize': '16',
+                    'legend': 'none'
+                },
+                'view': { 'columns': [3, 4] }
+            });
+
+            myDashboard.bind(collectionPicker, columnChart2);
+
+            //Draw the Dashboard
+            myDashboard.draw(data);
+        }
+    </script>
+    <br />
+    <br />
+
+    <div id="dashboard_div">
+        <div id="control_div" style="width:400px"></div>
+        <br />
+       <table style="border: 1px solid #ccc">
+           <tr>
+               <td style="border: 1px solid #ccc">
+                   <div id="piechart_div">
+                       <div id="barChart1_div"></div>
+                   </div>
+               </td>
+               <td style="border: 1px solid #ccc">
+                   <div id="pieChart1_div"></div>
+               </td>
+           </tr>
+           <tr>
+               <td style="border: 1px solid #ccc">
+                   <div id="columnChart1_div"></div>
+               </td>
+               <td style="border: 1px solid #ccc">
+                   <div id="columnChart2_div"></div>
+               </td>
+           </tr>
+       </table>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,27 @@
+[
+  {
+    "Name": "Erica Adeline Aranha",
+    "Role": "Project Manager & Developer (C#)",
+    "ImageUrl": "EA.png"
+  },
+  {
+    "Name": "Jennifer Choly",
+    "Role": "Developer (Python)",
+    "ImageUrl": "JC.png"
+  },
+  {
+    "Name": "Hui Shi",
+    "Role": "Developer (JavaScript)",
+    "ImageUrl": "HS.png"
+  },
+  {
+    "Name": "Tran Thi Thu Hieu",
+    "Role": "Business Analyst",
+    "ImageUrl": "HT.png"
+  },
+  {
+    "Name": "Saam Chacko",
+    "Role": "Data Analyst",
+    "ImageUrl": "SC.png"
+  }
+]

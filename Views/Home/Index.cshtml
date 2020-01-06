@@ -1,0 +1,63 @@
+﻿@model WebApplication1.Models.Collection
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@{
+    var result = (List<WebApplication1.Models.Collection>)ViewBag.CollectionList;
+    var noOfImagesInRow = 3;
+    var iter = result.Count() / noOfImagesInRow;
+    int i = 0;
+}
+
+<html>
+<head>
+    <style>
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 5px;
+            /*column-gap: 5;*/
+            /*margin: 8px 8px 8px 8px*/
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="https://images.unsplash.com/photo-1493274366568-b608e3895174?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=01c660d65dd4b0d5e9b702b3ffa2f95d&auto=format&fit=crop&w=1008&q=80" style="width: 100%; height: 509px;" />
+    </div>
+    <div>
+        <h1 style="font-family:Calibri"> Collections</h1>
+        <p style="font-size: large; color: #89959B; font-family:Calibri"> Explore curated lists of top restaurants, cafes, pubs, and bars in Toronto, based on trends </p>
+    </div>
+
+    @for (var j = 0; j < iter && i < result.Count; j++)
+    {
+        <div class="row">
+            @for (var x = 0; x < noOfImagesInRow && i < result.Count; x++)
+            {
+                <div class="column">
+                    <div>
+                        <img src="@result[i].Image_url" alt="hello" width="350" height="230" />
+                    </div>
+                    <div style="font-family:Calibri; font-size: large;">
+                        @*<br />*@
+                        <b> @result[i].Title </b>
+                        <p> @result[i].Description</p>
+                        <br />
+                    </div>
+                </div>
+                i++;
+            }
+        </div>
+    }
+
+</body>
+</html>
